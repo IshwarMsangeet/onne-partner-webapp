@@ -1,0 +1,23 @@
+<div class = "features modal-box">
+  <button class = "modal-close-btn" (click)="onClose()">
+          <mat-icon class="color-burgundy">clear</mat-icon>
+  </button>
+  <h1 mat-dialog-title class="text-center">{{data.title}}</h1>
+  <div mat-dialog-content>
+      <div fxLayout="row wrap" fxLayoutGap="20%" fxLayoutAlign="flex-start">
+          <div fxFlex="30%"  *ngFor = "let feature of data.features" class = "feature-item">
+              <h4>
+                  <span class = "f-icon"><img [src] = "feature.iconUrl"  width = "24" height = "24"/></span>
+                  <span class = "f-title">{{feature.title}}</span>
+              </h4>
+              <p>{{feature.description}}</p>
+          </div>
+      </div>
+      <div class = "modal-footer">
+          <p class="text-center">It will take only 3 minutes, we promise</p>
+          <button mat-button  (click) = "onClickCreate()"class = "align-center btn btn-burgundy">CREATE MY APP</button>
+          <p class = "text-small text-center">By continuing, you agree to our <a href = "#" target="_blank">terms</a> and <a href = "#" target="_blank">policies</a></p>
+      </div>
+  </div>
+  <div mat-dialog-actions></div>
+</div>

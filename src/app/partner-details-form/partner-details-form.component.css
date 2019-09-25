@@ -1,0 +1,278 @@
+::ng-deep .mat-step-header .mat-step-icon
+{
+    background      : #fff !important;
+    border          : 1px solid #AEAEAE;
+    color           : #E7E7E7 !important;
+}
+
+
+::ng-deep .mat-step-header .mat-step-icon-state-done {
+
+    color           : #910825 !important;
+    border          : 1px solid #910825;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected
+{
+    color           : #7A7A7A !important;
+    border          : 1px solid #505050;
+
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+::ng-deep .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+
+    background-color    : #910825;
+    height              : 5px;
+    border-radius       : 5px;
+}
+
+::ng-deep .mat-error {
+
+    color       : #FF0000 !important;
+}
+
+::ng-deep .mat-form-field-type-mat-input .mat-form-field-infix {
+
+    width : 18rem !important;
+}
+
+::ng-deep .mat-primary.mat-form-field-type-mat-select .mat-form-field-infix  {
+
+    width : 6rem !important;
+}
+
+::ng-deep .mat-form-field-flex .mat-form-field-type-mat-input .mat-form-field-infix {
+
+    width : 7.5 rem !important;
+}
+
+
+::ng-deep input[name = 'otp'] {
+
+    letter-spacing : 1.5rem;
+}
+
+
+
+::ng-deep input[name = 'businessId'] {
+
+    text-transform : lowercase !important;
+}
+
+
+::ng-deep .mat-hint {
+
+    font-size : 70%;
+}
+
+::ng-deep .mat-card {
+
+    padding     : 16px 0 !important;
+    box-shadow  : none !important;
+}
+
+::ng-deep .mat-card-title {
+    font-size   : 16px !important;
+    font-weight : 400 !important;
+}
+
+::ng-deep .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+.higlight {
+
+    font-weight : bold;
+}
+
+.link {
+   
+    color       :  #910825;
+    font-weight : bold;
+    cursor      : pointer;
+}
+
+.tab {
+
+    height          : 5px;
+    width           : 30.33%;
+    background      : #E7E7E7;
+    border-radius   : 3px;
+    margin          : 20px 2px;
+    display         : inline-block;
+    cursor          : pointer;
+
+}
+
+.tab.active {
+
+    background : #910825 !important;
+}
+
+.next {
+
+    color           : #910825;
+    text-align      : center;
+    margin-left     : auto;
+    margin-right    : auto;
+    font-weight     : 700;
+    font-size       : 17px;
+    letter-spacing  : 1px;
+    font-family     : 'Lato',sans-serif;
+    width           : 180px;
+    display         : inline-block;
+    margin-top      : 12%;
+}
+
+
+
+.loading {
+
+    width       : 500px;
+    height      : 500px;
+    position    : fixed;
+    left        : 70%;
+    top         : 46%;
+}
+
+::ng-deep .mat-progress-spinner circle {
+
+    stroke          : #910825 !important;
+    stroke-width    : 2% !important;
+}
+
+
+::ng-deep .mat-form-field-suffix .mat-icon {
+
+    color : 	#00b200;
+}
+
+::ng-deep .final .mat-card {
+
+    height          : 12rem;
+    overflow-y      : hidden;
+    margin-bottom   : 3rem;
+}
+
+::ng-deep .final .mat-card img {
+
+    margin-left     : auto;
+    margin-right    : auto;
+    display         : block;
+    position        : relative;
+}
+
+::ng-deep .final button {
+
+    width   : 75%;
+}
+
+::ng-deep .mat-progress-spinner {
+
+    display         : block;
+    position        : relative;
+    margin-left     : auto;
+    margin-right    : auto;
+    margin-top      : 3rem;
+}
+
+a.gender {
+
+    display : inline-block;
+    position: relative;
+    margin  : 0 20px 0 0;
+}
+
+a.gender.inactive {
+
+    font-weight     : normal;  
+    color           : #aeaeae
+}
+
+a.gender.active {
+
+    font-weight     : normal;  
+    color           : #505050
+}
+
+a.gender span.icon {
+
+    margin-right : 5px;
+}
+
+a.gender span.icon-text {
+
+    font-weight    : normal;
+}
+
+a.gender.active span.icon-text {
+
+    font-weight : 900;
+    color       : #505050;
+}
+
+.color-green {
+
+    color : #00b200;
+}
+
+.app-created {
+
+    background          : #fff url('../../assets/img/app-created.png');
+    background-size     : cover;
+    width               : 677px;
+    height              : 397px;
+    margin-top          : 3.2rem;
+}
+
+
+
+/* small size viewport */
+@media screen and (max-width: 599px) {
+
+    .form-on-boarding {
+
+        margin      : 0 14px;
+        min-height  : 40rem;
+    }
+
+
+    .mat-form-field.ng-tns-c3-4 {
+
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        padding: 0 16px;
+    }
+
+    .next {
+
+        width           : 145px;
+        margin-top      : 8%;
+    }
+
+    ::ng-deep .mat-form-field-type-mat-input .mat-form-field-infix {
+
+        width : 14.5rem !important;
+    }
+    
+    ::ng-deep .mat-primary.mat-form-field-type-mat-select .mat-form-field-infix  {
+    
+        width : 5rem !important;
+    }
+    
+    ::ng-deep .mat-form-field-flex .mat-form-field-type-mat-input .mat-form-field-infix {
+    
+        width : 5.5 rem !important;
+    }
+
+    ::ng-deep .mat-card-title {
+
+        margin-bottom : 30px !important;
+    }
+}
+
+
+

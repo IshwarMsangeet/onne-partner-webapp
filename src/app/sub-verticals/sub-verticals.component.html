@@ -1,0 +1,2 @@
+<app-vertical-grid  [verticals]="verticals" (selected)="verticalSelected($event)" [hidden]="isShowModal"></app-vertical-grid>
+<app-features *ngIf="isShowModal" [data]="data" (closed)="resetIsShowModal()"></app-features>

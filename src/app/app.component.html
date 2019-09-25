@@ -1,0 +1,86 @@
+<div class="container bg-white">
+        <div fxLayout
+        fxLayout.xs="column"
+        fxLayoutAlign="center"
+        fxLayoutGap="10px"
+        fxLayoutGap.xs="0">
+       <div class="item item-1" fxFlex="contentService.leftSideWidth">
+           <div class="sidebar">
+               <div class="logo"><img [src]="logoUrl" alt="logo"/></div>
+               <ng-container [ngSwitch]="contentService.appState">
+
+                    <div *ngSwitchCase="appStates.CHOOSE_MAIN_VERTICAL">
+                        <h2 class="font-rufina">Thanks for your interest in ONNE</h2>
+                        <br>
+                        <p>Choose the Business Vertical that is<br/> most suitable for you</p>                                               
+                    </div>
+
+                    <div *ngSwitchCase="appStates.CHOOSE_SUB_VERTICAL">
+                        <h2 class="font-rufina">Let us create your app, in a jiffy</h2>
+                        <br>
+                        <h3 class="font-bold">Select your Business</h3>
+                        <p>Choose the right option to build an app<br/>that is suitable for you</p>                      
+                    </div>
+
+                    <div *ngSwitchCase="appStates.CHOOSE_FEATURE">
+                        <h2 class="font-rufina">You chose {{ this.apiService._selectedSubvertical }}</h2>
+                        <br>
+                        <p>
+                            Here are some of the key features in your app<br/>
+                            There's much more, we promise.<br/>
+                            Let us create your app, in a jiffy
+                        </p>
+                    </div>
+                    
+                    <div *ngSwitchCase="appStates.CHOOSE_STEP_ONE" class = "hidden-xs">
+                        <h2 class="font-rufina">Tell us more about your {{ this.apiService._selectedSubvertical }}</h2>
+                        <br>
+                        <p>This is the first step towards creating your app<br/>It won't take more than 30 seconds</p>
+                    </div>
+
+                    <div *ngSwitchCase="appStates.CHOOSE_STEP_TWO" class = "hidden-xs">
+                        <h2 class="font-rufina">Have complete control</h2>
+                        <br>
+                        <p>
+                            This is the second step towards creating your app<br/>
+                            As an Owner, you will have ALL admin privileges.<br/>
+                            You can set up other admins later
+                        </p>
+                    </div>
+
+                    <div *ngSwitchCase="appStates.CHOOSE_STEP_THREE" class = "hidden-xs">
+                        <h2 class="font-rufina">Almost there</h2>
+                        <br>
+                        <p>
+                            This is the last step towards creating your app.<br/><br/>
+                            Once created you will have access to your<br/> 
+                            app admin console. Launch anytime
+                        </p>
+                    </div>
+                       
+
+                    <div *ngSwitchDefault class = "hidden-xs">
+                        <h2 class="font-rufina">Congratulations!</h2>
+                        <br>
+                        <p class = "p1">
+                            Your app is created on ONNE.Click on the 
+                            Admin Console button to make changes to your app. Enjoy.
+                        </p>
+                        <a href = "#" class = "admin-console-btn">Go to Admin Console</a>
+                        <p class = "p2">
+                            Click on the icon below to download 
+                            ONNE and access your app.
+                        </p>
+                        <div class = "btn-block">
+                            <a href = "#" class="store-btn android"></a>
+                            <a href = "#" class="store-btn apple"></a>
+                        </div>
+                    </div>
+                </ng-container>
+           </div>
+       </div>
+       <div class="item item-2" fxFlex="contentService.rightSideWidth">
+           <router-outlet></router-outlet>
+       </div>
+   </div>
+</div>

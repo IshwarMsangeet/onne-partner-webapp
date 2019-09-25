@@ -1,0 +1,43 @@
+<!-- <h3>Choose your business vertical</h3>
+<mat-grid-list [cols]="cols" rowHeight="100px" class="vertical-list">
+  <mat-grid-tile
+      *ngFor="let vertical of verticals"
+      [colspan]="1"
+      [rowspan]="1">
+      <mat-card (click)="selectVertical(vertical.id)">
+          <img mat-card-image [src]="vertical.imageUrl" [alt]="vertical.name" />
+          <mat-card-title>{{vertical.name}}</mat-card-title>
+      </mat-card>
+  </mat-grid-tile>
+</mat-grid-list> -->
+<div [ngClass]="class">
+    <div *ngIf = "showingMainVertical; else subverticals">
+        <h3 class="hidden-xs">Choose your business vertical</h3>
+
+        <div fxLayout="row wrap" fxLayout.xs="row wrap"  [fxLayoutGap]="fxLayoutGap" fxLayoutAlign="flex-start">      
+            <ng-container *ngFor="let item of verticals" >
+              <mat-card (click)="selectVertical(item)" [fxFlex]  ="fxFlex">
+                <img mat-card-image [src] = "item.iconUrl" [alt]="item.vertical_name">
+                <img mat-card-image>
+                <mat-card-title>{{item.verticalName}}</mat-card-title>
+              </mat-card>
+            </ng-container> 
+        </div>
+      </div>
+
+    <ng-template #subverticals>
+        <h3 class="hidden-xs">Choose your business sub vertical</h3>
+
+        <div fxLayout="row wrap" fxLayout.xs="row wrap"  [fxLayoutGap]="fxLayoutGap" fxLayoutAlign="flex-start" class="grid-wrap scroll-y">      
+            <mat-card (click)="selectVertical(item)" [fxFlex]  ="fxFlex" *ngFor="let item of verticals">
+                <img mat-card-image [src] = "item.iconUrl" [alt]="item.subvertical_name">
+                <img mat-card-image>
+                <mat-card-title>{{item.subverticalName}}</mat-card-title>
+            </mat-card>
+            <mat-card class = "additional" [fxFlex]  ="fxFlex">
+              <mat-card-title>Don't see what you are looking for?<br/><br/><strong>Tap to add</strong></mat-card-title>
+          </mat-card>        
+        </div>   
+    </ng-template>
+</div>
+

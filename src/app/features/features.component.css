@@ -1,0 +1,166 @@
+.vertical-list {
+    margin : 8% 0 2% 16%;
+}
+
+.feature-item h4 {
+    margin-bottom : 8px;
+}
+
+.feature-item p {
+    margin-top  : 0;
+    padding-top : 0;
+    font-size   : 0.9rem;
+}
+
+mat-card {
+    border          : 1px solid #e7e7e7;
+    box-shadow      : 2px 4px 3px 1px rgba(231,231,231.6);
+    margin-bottom   : 20px;
+    padding-top     : 36px;
+}
+
+.mat-card-image,
+.subverticals img {
+    width           : 35%;
+    margin-left     : auto;
+    margin-right    : auto;
+    display         : block;
+}
+
+.mat-card-title,
+.subverticals mat-card-title {
+    font-size   : 16px;
+    color       : #505050;
+    text-align  : center;
+    font-weight : 500;
+}
+
+.dialog.cdk-overlay-pane {
+    position    : static;
+    margin-left : 50%;
+    margin-top  : -32%;
+}
+
+.dialog .mat-dialog-container {
+    width       : 70%;
+}
+
+.features.modal-box {
+    background      : linear-gradient(to bottom right, #E7E7E7, #F6F6F6);
+    padding         : 1.5rem 0rem 0 2rem;
+    width           : 50%;
+    position        : absolute;
+    float           : left;
+    top             : 4%;
+    right           : 3%;
+    margin          : 0.5rem 0.5rem;
+ 
+}
+
+.modal-close-btn {
+
+    background      : #FFFFFF;
+    border-radius   : 50%;
+    border          : 0.075rem solid #910825;
+    width           : 30px;
+    height          : 30px;
+    position        : relative;
+    float           : right;
+    margin-top      : -2.5rem;
+    margin-right    : -0.7rem;
+    text-align      : center;
+    padding         : 2px 1px;
+
+}
+
+.modal-close-btn .material-icons {
+    font-size : 24px;
+}
+
+.f-icon {
+    padding-right   : 10px;
+}
+
+.f-icon img {
+    width   : 19px;
+    height  : 19px;
+    margin  : 0 0 -4px 0;
+}
+
+.f-title {
+    font-weight : 700;
+}
+
+.modal-footer {
+    margin-top      : 20px;
+    margin-bottom   : 20px;
+}
+
+.btn {
+    margin-top  : 30px;
+    width       : 30%;
+}
+
+p.text-small {
+    margin-top : 5px;
+}
+
+
+  /* small size viewport */
+  @media screen and (max-width: 599px) {
+
+    .mat-dialog-title {
+
+        margin-left : -2rem;
+    }
+
+    .modal-close-btn {
+
+        margin-top      : -2.2rem;
+        margin-right    : -0.4rem;
+    }
+
+    .features.modal-box {
+
+        width       : 87%;
+        position    : absolute;
+        float       : left;
+        top         : 2%;
+        right       : 0.5%;
+        margin      : 0.5rem 0.5rem;
+    }
+
+    .f-title {
+        font-size: 14px;
+    }
+    
+    .btn {
+
+        width : 60%;
+    }
+
+    .feature-item p {
+        margin-top: 0;
+        padding-top: 0;
+        font-size: 14px;
+        line-height: 20px;  
+  }
+
+  .modal-footer {
+
+    margin-top : 20%;
+  }
+
+  .feature-item {
+
+    max-width       : 38% !important;
+    margin-right    : 12% !important;
+  }
+
+  p.text-small {
+
+    margin-top  : 15px;
+    font-size   : 12px;
+  }
+
+}

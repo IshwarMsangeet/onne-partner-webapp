@@ -1,0 +1,481 @@
+<div class = "form-on-boarding" *ngIf = "!ownerCreated && !appCreated; else completed">
+    
+    <div [ngClass]="(activeTab === 1 || activeTab === 2 || activeTab === 3)? 'active tab':'tab'" (click) = "onClickTab(1)"></div>
+    <div [ngClass]="(activeTab === 2 || activeTab === 3)? 'active tab':'tab'" (click) = "onClickTab(2)"></div>
+    <div [ngClass]="(activeTab === 3)? 'active tab':'tab'" (click) = "onClickTab(3)"></div>
+   
+    <form  #partnerCreationForm = "ngForm" (ngSubmit)="onSubmit()"> 
+        <div class = "form-inner-block" *ngIf = "!isWaiting; else loader;">
+            <div *ngIf = "activeTab === 1">
+                <p class="font-rufina">First, about your <span class = "higlight">{{ this.apiService._selectedSubvertical }}</span></p>
+                <mat-vertical-stepper [linear]="isLinear" #stepper1>
+                    
+                    <mat-step                             
+                            label="Step 1" 
+                            state="active"  
+                            [stepControl]="partnerCreationForm.controls.businessData" 
+                            ngModelGroup = "businessData" 
+                            #businessData = "ngModelGroup">
+                            <ng-template matStepLabel>What is the name of your business?</ng-template>
+                            <mat-form-field>
+                                <input  matInput placeholder="Eg. Funday Playschool" 
+                                        (keyup.enter)="businessData.valid ? stepper1.next(): false;" 
+                                        required
+                                        name = "businessName" 
+                                        [(ngModel)] = "businessDataValue.name"  
+                                        #businessName = "ngModel">
+                                <mat-hint *ngIf = "!businessName.touched">This will be your app name</mat-hint>
+                                <!--<mat-error align = "end" *ngIf = "!businessName.errors?.pattern">Cannot use special characters</mat-error>-->
+                                <mat-error align = "end" *ngIf = "businessName.errors?.required && businessName.touched">This field is mandatory</mat-error>                              
+                            </mat-form-field>
+                    </mat-step>
+            
+                    <mat-step  label="Step 2" state="inactive">
+                        <ng-template matStepLabel>Give your business a unique id</ng-template>
+                        <mat-form-field  appearance="legacy">
+                            <input matInput placeholder = "Eg. fundayplayschool" 
+                            (keydown.enter) = "onClickTab(2)" 
+                            pattern = "^[a-zA-Z0-9_-]*$"
+                            required
+                            appUniqueBusinessId 
+                            name = "businessId" 
+                            [(ngModel)] = "businessDataValue.onne_id"
+                            #businessId = "ngModel">
+                            <mat-icon matSuffix  *ngIf = "businessId.valid">check</mat-icon>
+                            <mat-hint *ngIf = "!businessId.touched">Business ID is your unique ONNE Id that will help us identify your business</mat-hint>
+                            <mat-error align = "end" *ngIf = "businessId.errors?.pattern">Cannot use space and special characters</mat-error>
+                            <mat-error align = "end" *ngIf = "businessId.errors?.required">This field is mandatory</mat-error>                                
+                            <!--<mat-error align = "end" *ngIf = "businessId.errors?.required && businessId.touched">This field is mandatory</mat-error>
+                            <mat-error align = "end" *ngIf = "businessId.errors?.minlength">This field must be at least 3 characters.</mat-error>
+                            -->             
+                        </mat-form-field>
+                    </mat-step>
+
+                    <ng-template matStepperIcon="active">
+                        <mat-icon>done</mat-icon>
+                    </ng-template>
+            
+                    <ng-template matStepperIcon="edit">
+                        <mat-icon>done</mat-icon>
+                    </ng-template>
+    
+                    <ng-template matStepperIcon="inactive">
+                        <mat-icon>done</mat-icon>
+                    </ng-template>
+    
+                </mat-vertical-stepper>
+            </div>
+                
+            <div *ngIf = "activeTab === 2">
+                
+                <!--
+                    We are asking the ueser to Chose a Sign In or Create to set up the owner for his App
+                    If he is having an End User Account he can go ahead with SignIn method
+                    Where as if he is a fresh user, he can click on Sign Up Link
+                -->
+                <ng-container *ngIf = "!choiceMade">
+                    <p class="font-rufina">Tell us <span class = "higlight">who owns the app</span></p>
+                    <mat-vertical-stepper [linear]="isLinear" #stepper2>
+                        <mat-step  label="Step 3" state="inactive"  class="phone-block">
+                            <ng-template matStepLabel>Are you a ONNE user? <span class = "link"  (click) = "onClickSignIn()">Sign in here</span> </ng-template>
+                            <mat-card>
+                                New user? <span class = "link" (click) = "onClickSignUp()">Create User ID</span><br/>
+                                <span class="mat-hint"> User ID is your unique ONNE Id that will help us identify you.</span>
+                            </mat-card>
+                        </mat-step>
+
+                        <ng-template matStepperIcon="active">
+                            <mat-icon>done</mat-icon>
+                        </ng-template>
+    
+                        <ng-template matStepperIcon="edit">
+                            <mat-icon>done</mat-icon>
+                        </ng-template>
+    
+                        <ng-template matStepperIcon="inactive">
+                            <mat-icon>done</mat-icon>
+                        </ng-template>
+                    </mat-vertical-stepper>
+                </ng-container>
+                            
+                <!--
+                    [Sign In Flow]
+                    User has chosen to go ahead with Sign in Method,
+                    So we expect this user is already a Onne End user
+                    He is suppose to enter his onneId, 
+                    But in case he has forgotten his OnneId a Forgot OnneId option is also available
+                -->
+                <ng-container *ngIf = "choiceMade && ownerSignIn">
+                    <mat-card *ngIf = "(!phoneCaptured  && !forgotUserId) || (phoneVerified && ownerDataValue.onne_id != '')">
+                        <mat-card-title align = "center">Sign in with your Onne User Id</mat-card-title>
+                        <mat-form-field>
+                            <input matInput
+                                type = "text" 
+                                placeholder="Enter your Onne User Id"  
+                                (keyup.enter)= "userId.valid  ? valdateOnneId(): false" 
+                                required 
+                                name = "userId" 
+                                [(ngModel)] = "ownerDataValue.onne_id" 
+                                #userId = "ngModel"> 
+                                <mat-hint (click) = "onClickForgotUserId()">Forgot <strong class = "color-burgundy">user id?</strong></mat-hint>
+                                <mat-error align = "end" *ngIf = "!userId.valid && userId.touched">This field is mandatory</mat-error>
+                                <mat-error align = "end" *ngIf = "response === 500">You entered wrong Onne Id</mat-error>
+                                <mat-error align = "end" *ngIf = "response === 404">User not found</mat-error>
+                        </mat-form-field>
+                        <div>
+                            <div  (click) = "onClickBack(1)"
+                                [class] = "nextClass">BACK
+                            </div>
+                            <div *ngIf = "userId.valid"
+                                (click) = "valdateOnneId()"
+                                [class] = "nextClass">NEXT
+                            </div>
+                        </div>
+                        
+                    </mat-card>
+                    
+                    <!-- 
+                        [Sign In Flow]
+                        User Clicked on Forgot Password, we will ask for his registered phone number, 
+                        If it is validated, user's onne id is auto populated 
+                        and he can go to the next step of otp verification  
+                    -->
+                    <mat-card *ngIf = "forgotUserId">
+                        <mat-card-title align = "center">To verify, you need to enter your registered mobile number</mat-card-title>
+                        <div fxLayout
+                            fxLayoutAlign="center"
+                            fxLayoutGap="10px">
+                            <div fxFlex="28%">
+                                <mat-form-field>
+                                    <mat-select placeholder="Country Code"
+                                    required 
+                                    name = "stdCode" 
+                                    [(ngModel)] = "ownerDataValue.std_code"
+                                    #stdCode = "ngModel">
+                                        <mat-select-trigger> 
+                                            <img [src] = "flagUrl " [style.width.px] = "21" [style.height.px] = "15"> 
+                                            &nbsp;+{{ ownerDataValue.std_code }}
+                                        </mat-select-trigger>
+                                        <mat-option 
+                                            *ngFor="let item of countryCodes" 
+                                            [value]="item.callingCodes[0]"
+                                            (click) = "flagUrl = item.flag">
+                                                    <img [src] = "item.flag" [style.width.px] = "21" [style.height.px] = "15">                                              
+                                                    {{ item.name }} &nbsp;+{{ item.callingCodes[0] }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error align = "left" *ngIf = "!stdCode.valid && stdCode.touched">Select Country Code</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="65%">
+                                <mat-form-field>
+                                    <input matInput
+                                    type = "number" 
+                                    placeholder="Enter your number"  
+                                    (keyup.enter)= "phoneNumber.valid && stdCode.valid ? onIdentifyUserWithPhone(stdCode.value, phoneNumber.value): false" 
+                                    required 
+                                    name = "phoneNumber" 
+                                    [(ngModel)] = "ownerDataValue.phone" 
+                                    #phoneNumber = "ngModel"> 
+                                    <mat-error align = "end" *ngIf = "!phoneNumber.valid && phoneNumber.touched">Enter valid phone number</mat-error>     
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div>
+                            <div  (click) = "onClickBack(3)"
+                                [class] = "nextClass">BACK
+                            </div>
+                            <div   *ngIf = "phoneNumber.valid && stdCode.valid"
+                                    (click) = "onIdentifyUserWithPhone(stdCode.value, phoneNumber.value)"
+                                    [class] = "nextClass">NEXT
+                            </div>
+                        </div>
+                        
+
+                    </mat-card>
+                    <!-- ends here -->
+                    
+                    <!--
+                        [Sign In Flow]
+                        Case when We have captured user's phone which is entered by himself
+                        and have send an OTP to Verify his number, He needs to enter OTP here
+                        and we will be verifying It
+                    -->
+                    <mat-card *ngIf = "phoneCaptured && !phoneVerified">
+                        <mat-card-title align = "center">Enter OTP received in your registered number</mat-card-title>
+                        <mat-form-field  [class] = "center">
+                            <input matInput 
+                                        type = "number"
+                                        placeholder="" 
+                                        required
+                                        (keyup.enter)= "otp.valid ? onVerifyOtp(otp.value): false" 
+                                        name = "otp" 
+                                        ngModel 
+                                        #otp = "ngModel"> 
+                        </mat-form-field>
+                        <div>
+                            <div  (click) = "onClickBack(2)"
+                                [class] = "nextClass">BACK
+                            </div>
+                            <div 
+                                *ngIf = "otp.valid"
+                                (click) = "onVerifyOtp(otp.value)" 
+                                [class] = "nextClass">NEXT
+                            </div>
+                        </div>                        
+                    </mat-card>
+
+                    
+
+
+                </ng-container>
+                
+                <!--
+                    [Sign Up Flow]
+                    User has chosen to go ahead with Sign Up Method,
+                    So we expect this user to enter his mobile number and choose his country code from the list
+                -->
+                <ng-container *ngIf = "choiceMade && ownerSignUp">
+                    <mat-card *ngIf = "!phoneCaptured">
+                        <mat-card-title align = "center">To create a User ID with ONNE, you need to register with a mobile number</mat-card-title>
+                        <div fxLayout
+                            fxLayoutAlign="center"
+                            fxLayoutGap="10px">
+                            <div fxFlex="28%">
+                                <mat-form-field>
+                                    <mat-select placeholder="Country Code"
+                                    required 
+                                    name = "stdCode" 
+                                    [(ngModel)] = "ownerDataValue.std_code"
+                                    #stdCode = "ngModel">
+                                        <mat-select-trigger>
+                                                <img [src] = "flagUrl " [style.width.px] = "21" [style.height.px] = "15"> 
+                                                &nbsp;+{{ ownerDataValue.std_code }}
+                                        </mat-select-trigger>
+                                        <mat-option 
+                                            *ngFor = "let item of countryCodes" 
+                                            [value] ="item.callingCodes[0]"
+                                            (click) = "flagUrl = item.flag">
+                                                    <img [src] = "item.flag" [style.width.px] = "21" [style.height.px] = "15">
+                                                    {{ item.name }} &nbsp;+{{ item.callingCodes[0] }}
+                                        </mat-option>
+                                        </mat-select>
+                                    <mat-error align = "left" *ngIf = "!stdCode.valid && stdCode.touched">Select Country Code</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="65%">
+                                <mat-form-field>
+                                    <input matInput
+                                    type = "number" 
+                                    placeholder="Enter your number"  
+                                    (keyup.enter)= "phoneNumber.valid && stdCode.valid ? onSendOtp(): false" 
+                                    required 
+                                    name = "phoneNumber" 
+                                    [(ngModel)] = "ownerDataValue.phone" 
+                                    #phoneNumber = "ngModel"> 
+                                    <mat-error align = "end" *ngIf = "!phoneNumber.valid && phoneNumber.touched">Enter valid phone number</mat-error>     
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div>
+                            <div  (click) = "onClickBack(1)"
+                                    [class] = "nextClass">BACK
+                            </div>
+                            <div    *ngIf = "phoneNumber.valid && stdCode.valid"
+                                    (click) = "onSendOtp(stdCode.value, phoneNumber.value)"
+                                    [class] = "nextClass">NEXT
+                            </div>
+                        </div>
+                        
+                    </mat-card>
+                                
+                    <!--
+                        [Sign Up Flow]
+                        Case when We have captured user's phone which is entered by himself
+                        and have send an OTP to Verify his number, He needs to enter OTP here
+                        and we will be verifying It
+                    -->
+                    <mat-card *ngIf = "phoneCaptured && !phoneVerified">
+                        <mat-card-title align = "center">Enter OTP received in your registered number</mat-card-title>
+                        <mat-form-field  [class] = "center">                          
+                            <input matInput 
+                                    type = "number"
+                                    placeholder="" 
+                                    required
+                                    (keyup.enter)= "otp.valid? onVerifyOtp(otp.value): false" 
+                                    name = "otp" 
+                                    ngModel 
+                                    #otp = "ngModel"> 
+                        </mat-form-field>
+                        <div>
+                            <div  (click) = "onClickBack(4)"
+                                [class] = "nextClass">BACK
+                            </div>
+                            <div 
+                                *ngIf = "otp.valid"
+                                (click) = "onVerifyOtp(otp.value)" 
+                                [class] = "nextClass">NEXT
+                            </div>
+                        </div>                       
+                    </mat-card>
+                
+                    <!--
+                        [Sign Up Flow]
+                        We are collecting the basic details of the Owner to set up his account
+                    -->
+                    <mat-vertical-stepper [linear]="isLinear" #stepper3  *ngIf = "phoneCaptured && phoneVerified">
+                        <p class="font-rufina">Tell us <span class = "higlight">who owns the app</span></p>
+                        <div  *ngIf = "ownerSignUp && phoneVerified">
+                            <mat-step 
+                                label="Step 4" 
+                                state="inactive" 
+                                [class]="ownerClass"
+                                [stepControl]="partnerCreationForm.controls.ownerName" 
+                                ngModelGroup = "ownerName" 
+                                #ownerName = "ngModelGroup">
+                                <ng-template matStepLabel>What is the name of the owner?</ng-template>
+                                <div fxLayout
+                                    fxLayoutAlign="left"
+                                    fxLayoutGap="10px">
+                                    <div fxFlex="30%">
+                                        <mat-form-field>
+                                            <input matInput 
+                                            (keyup.enter)="ownerFirstName.valid ? stepper3.next(): false;" 
+                                            placeholder="First Name"  
+                                            required
+                                            name = "ownerFirstName" 
+                                            [(ngModel)] = "ownerDataValue.fname" 
+                                            #ownerFirstName = "ngModel">
+                                            <mat-error align = "end" *ngIf = "ownerFirstName.errors?.required && ownerFirstName.touched">This field is mandatory</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxFlex="30%">
+                                        <mat-form-field>
+                                            <input matInput 
+                                            placeholder="Last Name"  
+                                            (keyup.enter)="ownerFirstName.valid && ownerLastName.valid ? stepper3.next(): false;"
+                                            required
+                                            name = "ownerLastName" 
+                                            [(ngModel)] = "ownerDataValue.lname" 
+                                            #ownerLastName = "ngModel"> 
+                                            <mat-error align = "end" *ngIf = "ownerLastName.touched && ownerLastName.errors?.required">This field is mandatory</mat-error>                                       
+                                        </mat-form-field>
+                                    </div>                                  
+                                </div>
+                            </mat-step>
+    
+                            <mat-step  
+                                label="Step 5" 
+                                state="inactive"
+                                [class]="ownerClass"
+                                [stepControl]="partnerCreationForm.controls.ownerDob" 
+                                ngModelGroup = "ownerDob" 
+                                #ownerDob = "ngModelGroup">
+                                <ng-template matStepLabel>When where you born?</ng-template>
+                                <mat-form-field>
+                                    <input  [min]="minDate" 
+                                            [max]="maxDate"
+                                            required
+                                            matInput [matDatepicker]="picker" 
+                                            placeholder="Choose a date"
+                                            (click)="picker.open()"
+                                            name = "dob" 
+                                            [(ngModel)] = "ownerDataValue.dob"  
+                                            #dob = "ngModel"
+                                            readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>                                  
+                                </mat-form-field>
+                            </mat-step>
+
+                            <mat-step 
+                                label="Step 6" 
+                                state="inactive"
+                                [stepControl]="partnerCreationForm.controls.ownerGender" 
+                                ngModelGroup = "ownerGender" 
+                                #ownerGender = "ngModelGroup">
+                                <ng-template matStepLabel>And you are a ..?</ng-template>
+                                <a (click) = "onSelectGender('MALE')" [class] = "ownerDataValue.gender == 'MALE' ? 'gender active' : 'gender inactive' ">
+                                    <span class="icon"><img src = "../../assets/img/ico-male.png"></span>
+                                    <span class="icon-text">Male</span>
+                                </a>
+                                <a (click) = "onSelectGender('FEMALE')" [class] = "ownerDataValue.gender == 'FEMALE' ? 'gender active' : 'gender inactive' ">
+                                        <span class="icon"><img src = "../../assets/img/ico-female.png"></span>
+                                    <span class="icon-text">Female</span>
+                                </a>
+                                <a (click) = "onSelectGender('OTHER')" [class] = "ownerDataValue.gender == 'OTHER' ? 'gender active' : 'gender inactive' ">
+                                    <span class="icon"><img src = "../../assets/img/ico-other.png"></span>
+                                    <span class="icon-text">Other</span>
+                                </a>
+
+                                <!--<mat-radio-group
+                                    aria-label = "gender"
+                                    required
+                                    name = "gender" 
+                                    [(ngModel)] = "ownerDataValue.gender" 
+                                    #gender = "ngModel">
+                                    <mat-radio-button value="MALE">Male</mat-radio-button>
+                                    <mat-radio-button value="FEMALE">Female</mat-radio-button>
+                                    <mat-radio-button value="OTHER">Other</mat-radio-button>
+                                </mat-radio-group>-->
+
+                            </mat-step>  
+    
+                            <mat-step label="Step 7" state="inactive">
+                                <ng-template matStepLabel>Create a User ID for the owner</ng-template>
+                                <mat-form-field>
+                                    <input  matInput placeholder="Eg. elonmusk1971"
+                                            required
+                                            pattern = "^[a-zA-Z0-9_-]*$"
+                                            appUniqueUserId  
+                                            (keydown.enter) = "userId.valid ? onClickTab(3): false;"
+                                            name = "userId" 
+                                            [(ngModel)] = "ownerDataValue.onne_id"  
+                                            #userId = "ngModel"> 
+                                    <mat-icon matSuffix  *ngIf = "userId.valid">check</mat-icon>
+                                    <mat-hint *ngIf = "!userId.touched">This user id is your unique id in our records</mat-hint>
+                                    <mat-error align = "end" *ngIf = "userId.errors?.pattern">Cannot use space and special characters</mat-error>
+                                    <mat-error align = "end" *ngIf = "userId.errors?.required">This field is mandatory</mat-error> 
+                                    <mat-error align = "end" *ngIf = "userId.errors?.exists">This is already taken. Try another</mat-error>
+                                </mat-form-field>
+                            </mat-step>
+    
+                        </div>
+
+                        <ng-template matStepperIcon="active">
+                            <mat-icon>done</mat-icon>
+                        </ng-template>
+    
+                        <ng-template matStepperIcon="edit">
+                            <mat-icon>done</mat-icon>
+                        </ng-template>
+    
+                        <ng-template matStepperIcon="inactive">
+                            <mat-icon>done</mat-icon>
+                        </ng-template>
+                    </mat-vertical-stepper>
+                </ng-container>
+            </div>
+                
+            <div *ngIf = "activeTab === 3">
+                
+                <div *ngIf = "partnerCreationForm.valid && phoneVerified && !ownerCreated" class = "final">
+                    <p class="font-rufina">Lastly let's <span class = "higlight">create your app</span></p>
+                    <mat-card>
+                        <img  src="../../assets/img/phone-apps-image.png" alt="Your Onne App">             
+                    </mat-card>
+                    <button 
+                        type = "submit" 
+                        mat-button class = "align-center btn btn-burgundy"
+                        [disabled]="!partnerCreationForm.form.valid">CREATE</button>
+                </div>
+            </div>
+        </div>     
+    </form>
+    <ng-template #loader>
+         <mat-spinner></mat-spinner>
+    </ng-template>  
+</div>
+<ng-template #completed>
+    <div class="app-created"></div>   
+</ng-template>    

@@ -1,0 +1,55 @@
+.sidebar {
+    margin : 16px 20px;
+}
+
+.logo img {
+    width : 112px;
+    margin-top : 5%;
+    margin-bottom : 5%;
+}
+
+p.p1 {
+
+    margin : 0px 0 2rem;
+}
+
+p.p2 {
+
+    margin : 2rem 0 1rem;
+}
+
+.admin-console-btn {
+
+    width           : 235px;
+    height          : 47px;
+    border-radius   : 3px;
+    box-shadow      : 0 5px 10px 0 rgba(0, 0, 0, 0.05);
+    border          : solid 1px #910825;
+    color           : #910825;
+    text-transform  : uppercase;
+    font-size       : 16px;
+    padding         : 0.4rem .8rem;
+}
+
+
+.store-btn.android {
+
+    background          : url('../assets/img/google-play-badge.png');
+    background-size     : cover;
+    width               : 123.6px;
+    height              : 36px;
+    display             : inline-block;
+    margin-right        : 5px;
+
+}
+
+.store-btn.apple {
+    
+    background          : url('../assets/img/app-store-badge.png');
+    background-size     : cover;
+    width               : 123.6px;
+    height              : 36px;
+    display             : inline-block;
+    margin-left         : 5px;
+
+}

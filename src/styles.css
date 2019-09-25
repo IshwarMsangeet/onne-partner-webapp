@@ -1,0 +1,224 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+body {
+
+    margin      : 0 auto;
+    padding     : 0;
+    font-family : 'Lato', sans-serif;
+    font-size   : 1rem;
+    font-weight : 400;
+    color       : #111111;
+    line-height : 24px;
+}
+
+.container {
+    
+    margin          : 5% 2%;
+    padding         : 5% 4%;
+    border-radius   : 5px;
+    box-shadow      : 0 2px 6px 0 rgba(0, 0, 0, 0.17);
+
+}
+
+
+.scroll-y::-webkit-scrollbar-track
+{
+	-webkit-box-shadow  : inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius       : 3.5px;
+	background-color    : #ffffff;
+}
+
+.scroll-y::-webkit-scrollbar
+{
+	width           : 5px;
+	background-color: #ffffff;
+}
+
+.scroll-y::-webkit-scrollbar-thumb
+{
+	border-radius       : 3.5px;
+	-webkit-box-shadow  : inset 0 0 6px rgba(0,0,0,.3);
+	background-color    : #e7e7e7;
+}
+
+h1, h2 {
+
+    font-weight : 700;
+}
+
+h3, h4, h5 {
+
+    font-weight : 500;
+}
+
+a {
+    color               : #910825;
+    font-weight         : 700;
+    cursor              : pointer;
+    text-decoration     : none;
+}
+
+a:hover, a:focus, a:active {
+
+    color               : #B80A2E;
+    text-decoration     : none;
+}
+
+.font-rufina {
+
+    font-family : Rufina;
+}
+
+.font-bold {
+
+    font-weight: 600;
+}
+
+.font-bolder {
+
+    font-weight: 900;
+}
+
+.color-purple {
+
+    color : #501B35;
+}
+
+.color-burgundy {
+
+    color : #910825;
+}
+
+.bg-white {
+
+    background : #FFFFFF;
+}
+
+.bg-pale-white {
+
+    background : #F6F6F6;
+}
+
+.bg-off-white {
+
+    background : #E7E7E7;
+}
+
+
+.bg-dark-grey {
+
+    background  : #505050;
+    color       : #FFFFFF;
+}
+
+.bg-light-grey {
+
+    background  : #7A7A7A;
+}
+
+.bg-lighter-grey {
+
+    background  : #AEAEAE;
+}
+
+.btn {
+        border-radius   : 3px;
+        line-height     : 24px;
+        font-weight     : 500;
+        font-family     : 'Lato', sans-serif;
+        letter-spacing  : 1px;
+        text-transform  : uppercase;
+}
+
+
+.btn-purple {
+
+    background  : #501B35;
+    border      : 1px solid #501B35;
+    color       : #FFFFFF;
+}
+
+.btn-burgundy {
+
+    background  : #910825;
+    border      : 1px solid #910825;
+    color       : #FFFFFF;
+}
+
+.btn-burgundy:hover {
+
+    background  : #910825;
+    border      : 1px solid #910825;
+}
+
+.btn-yellow {
+
+    background  : #FFD700;
+    border      : 1px solid #FFD700;
+}
+
+.align-center {
+
+    margin-left     : auto !important;
+    margin-right    : auto !important;
+    display         : block !important;
+    position        : relative !important;
+}
+
+.text-center {
+
+    text-align : center;
+}
+
+.text-right {
+    text-align  : right;
+}
+
+.text-small {
+
+    font-size : 90%;
+}
+
+mat-icon {
+
+    font-weight : 900;
+}
+
+button {
+    cursor : pointer;
+}
+
+.hidden {
+
+    display : none;
+}
+
+
+/* small size viewport */
+@media screen and (max-width: 599px) {
+
+    .hidden-xs {
+
+        display : none;
+    }
+
+    .container {
+
+        margin      : 0 auto;
+        padding     : 0;
+        background  : #fcfcfc;
+    }
+
+    h2 {
+        font-size : 20px;
+    }
+
+    p {
+        font-size   : 16px;
+        line-height : 26px;
+        margin      : 0;
+    }
+
+
+
+}
