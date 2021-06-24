@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build",
+    "heroku-postbuild": "ng build --prod", // this will be run on Heroku
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -23,10 +24,13 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
+    "express": "^4.17.1",
     "google-libphonenumber": "^3.2.2",
     "intl-tel-input": "^15.0.0",
+    "path": "^0.12.7",
     "rxjs": "^6.3.3",
     "tslib": "^1.9.0",
+    "typescript": "~3.2.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
@@ -38,6 +42,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
+    "enhanced-resolve": "^3.3.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.1",
@@ -47,7 +52,10 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
-    "tslint": "~5.11.0",
-    "typescript": "~3.2.2"
+    "tslint": "~5.11.0"
+  },
+  "engines": {
+    "node": "^14.17.1",
+    "npm": "^7.13.0"
   }
 }
